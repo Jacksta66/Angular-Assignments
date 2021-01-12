@@ -1,11 +1,8 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CounterService} from './counter.service';
 
 @Injectable({providedIn: 'root'})
 export class UsersService {
-
-  userSetToInactive = new EventEmitter<number>();
-  userSetToActive = new EventEmitter<number>();
   activeUsers = ['Max', 'Anna'];
   inactiveUsers = ['Chris', 'Manu'];
 
