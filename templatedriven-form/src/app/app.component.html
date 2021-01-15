@@ -1,0 +1,95 @@
+<div class="container">
+  <h1>Add a Form with the following Inputs (and Validators)</h1>
+  <ol>
+    <li>Mail address (should not be empty and should be an email address)</li>
+    <li>A Dropdown which allows the user to select from three different Subscriptions ("Basic", "Advanced", "Pro")</li>
+    <ul>
+      <li>Set "Advanced" as Default</li>
+    </ul>
+    <li>A Password field (should not be empty)</li>
+    <li>A Submit Button</li>
+    <li>Display a warning message if the Form is invalid AND was touched. Display a warning message below each input if
+      it's invalid.
+    </li>
+    <li> Upon submitting the form, you should simply print the Value of the Form to the Console.</li>
+    <ul>
+      <li>Optionally, display it in your template.</li>
+    </ul>
+  </ol>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <h2>Subscribe to service</h2>
+      <div *ngIf="!subscribeForm.valid && subscribeForm.touched" class="alert alert-warning" role="alert">
+        The form has incomplete or invalid fields below.
+      </div>
+      <form #subscribeForm="ngForm" (ngSubmit)="onSubscribe()">
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input #emailInput="ngModel"
+                     class="form-control"
+                     email
+                     id="email"
+                     name="email"
+                     ngModel
+                     ngNativeValidate
+                     required
+                     type="email">
+              <span *ngIf="!emailInput.valid && emailInput.touched" class="help-block">
+                Please enter a valid email address.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input #passwordInput="ngModel"
+                     class="form-control"
+                     id="password"
+                     minlength="10"
+                     name="password"
+                     ngModel
+                     required
+                     type="password">
+              <span *ngIf="!passwordInput.valid && passwordInput.touched" class="help-block">
+                Password must not be empty, and must contain more than 10 characters.
+              </span>
+            </div>
+            <div class="form-group">
+              <label for="subscription">Subscription</label>
+              <select #subscriptionInput="ngModel"
+                      [ngModel]="[defaultSubscription]"
+                      class="form-control"
+                      id="subscription"
+                      name="subscription"
+                      required
+                      type="select">
+                <option value="basic">Basic</option>
+                <option value="advanced">Advanced</option>
+                <option value="pro">Pro</option>
+              </select>
+              <span *ngIf="!subscriptionInput.valid && subscriptionInput.touched" class="help-block">
+                Please select a subscription.
+              </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 btn-toolbar">
+              <button [disabled]="!subscribeForm.valid" class="btn btn-success" type="submit">Subscribe</button>
+              <button (click)="onFormReset()" class="btn btn-primary" type="button">Clear</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div *ngIf="submitted">
+    <h3>Submitted Form Data</h3>
+    <hr>
+    <button (click)="showPassword = !showPassword" class="btn btn-default" type="button">Show Password?</button>
+    <hr>
+    <p>Email: {{subscription.email}}</p>
+    <p *ngIf="showPassword">Password: {{subscription.password}}</p>
+    <p>Subscription: {{subscription.subscription}}</p>
+  </div>
+</div>
