@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <h1>Reactive driven form assignment</h1>
+      <p>Create a Form with the following Controls and Validators</p>
+      <ol>
+        <li>Project Name (should not be empty)</li>
+        <li>Mail (should not be a empty and a valid email)</li>
+        <li>Project Status Dropdown, with three values: 'Stable', 'Critical', 'Finished'</li>
+        <li>Submit Button</li>
+      </ol>
+      <p>Add your own Validator which doesn't allow "Test" as a Project Name.
+        Also implement that Validator as an async Validator (replace the other one)
+        Upon submitting the form, simply print the value to the console</p>
+
+      <h2>Create project</h2>
+
+      <form (ngSubmit)="onSubmit()" [formGroup]="newProjectForm">
+        <div class="row">
+          <div class="col-xs-10">
+            <div class="form-group">
+              <label for="projectName">Project Name:</label>
+              <input class="form-control"
+                     formControlName="name"
+                     id="projectName"
+                     name="projectName"
+                     type="text"/>
+              <span
+                *ngIf="!newProjectForm.get('name').valid && newProjectForm.get('name').touched"
+                class="help-block">
+                  <span
+                    *ngIf="newProjectForm.get('name').errors['projectNameIsForbidden']"
+                    class="help-block">Following project names are invalid:
+                    <ul><li *ngFor="let name of forbiddenNames">{{name}}</li></ul>
+                 </span>
+                 <span
+                   *ngIf="newProjectForm.get('name').errors['required']"
+                   class="help-block">Project name is required!
+                 </span>
+            </span>
+
+            </div>
+            <div class="form-group">
+              <label for="email">Mail</label>
+              <input class="form-control"
+                     formControlName="mail"
+                     id="email"
+                     name="email"
+                     type="email"/>
+            </div>
+            <span
+              *ngIf="!newProjectForm.get('mail').valid && newProjectForm.get('mail').touched"
+              class="help-block">Please enter a valid email!
+            </span>
+            <div class="form-group">
+              <label for="projectStatus">Project Status:</label>
+              <select class="form-control"
+                      formControlName="status"
+                      id="projectStatus"
+                      name="projectStatus"
+                      type="select">
+                <option *ngFor="let status of projectStatus" value="{{status}}">{{status}}</option>
+              </select>
+              <span
+                *ngIf="!newProjectForm.get('status').valid && newProjectForm.get('status').touched"
+                class="help-block">Please select a project status!
+            </span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 btn-toolbar">
+              <button [disabled]="!newProjectForm.valid" class="btn btn-primary" type="submit">Create Project</button>
+              <button (click)="onReset()" class="btn btn-primary" type="button">Clear</button>
+            </div>
+          </div>
+          <span *ngIf="!newProjectForm.valid && newProjectForm.touched"
+                class="col-xs-12"
+                class="help-block">The form cannot be completed until above errors are corrected.
+            </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
