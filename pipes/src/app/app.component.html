@@ -4,11 +4,11 @@
       <h1>Pipes Practice</h1>
       <h2>Tasks</h2>
       <ol>
-        <li>Implement pipe to reverse a string e.g the instance type</li>
-        <li>Implement pipe to sort the list byu the name of the instance</li>
+        <li>Implement pipe to reverse a string e.g the instance type &#9989;</li>
+        <li>Implement pipe to sort the list by the name of the instance &#9989;</li>
       </ol>
       <input type="text" [(ngModel)]="filteredStatus">
-      <br>
+      <br><br>
       <button class="btn btn-primary" (click)="onAddServer()">Add Server</button>
       <br><br>
       <h2>App Status: {{ appStatus | async}}</h2>
@@ -16,14 +16,14 @@
       <ul class="list-group">
         <li
           class="list-group-item"
-          *ngFor="let server of servers | filter:filteredStatus:'status'"
+          *ngFor="let server of servers | filter:filteredStatus:'status' | sort:'asc':'name'"
           [ngClass]="getStatusClasses(server)">
           <span
             class="badge">
             {{ server.status }}
           </span>
           <strong>{{ server.name | shorten:15 }}</strong> |
-          {{ server.instanceType | uppercase }} |
+          {{ server.instanceType | reverse | uppercase  }} |
           {{ server.started | date:'fullDate' | uppercase }}
         </li>
       </ul>
